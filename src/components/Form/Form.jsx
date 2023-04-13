@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FormStyled, Input, Label } from './Form.styled';
 import { Button } from 'components/ContactList/ContactList.styled';
 import { addContact } from '../Redux/operation';
@@ -14,7 +14,6 @@ export const Form = () => {
   const dispatch = useDispatch();
   const nameId = nanoid();
   const numberId = nanoid();
-  const contacts = useSelector(state => state.contacts.items);
 
   const [form, setForm] = useState(initialStates);
 
@@ -29,19 +28,9 @@ export const Form = () => {
   };
   const newContact = { ...form, id: nanoid() };
 
-  const originFilter = name => {
-    if (
-      contacts?.some(item => item.name.toLowerCase() === name.toLowerCase())
-    ) {
-      alert('such name alredy exist');
-      return;
-    }
-    return dispatch(addContact(newContact));
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-    originFilter(form.name);
+    dispatch(addContact(newContact));
     setForm(initialStates);
   };
 

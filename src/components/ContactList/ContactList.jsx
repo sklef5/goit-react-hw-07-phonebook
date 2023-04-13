@@ -8,10 +8,12 @@ const ContactList = () => {
   const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.filter.data);
 
+  
   useEffect(() => {
     dispatch(getContact());
-    console.log('len',contacts.length)
-  }, [dispatch, contacts.length]);
+  }, [contacts.length, dispatch]);
+
+
 
   const contactFilter = () => {
     if (filter === '') return contacts;
